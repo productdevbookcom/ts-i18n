@@ -1,0 +1,59 @@
+{
+  "name": "ts-bundle-template",
+  "version": "1.0.0",
+  "description": "add description",
+  "keywords": [
+    "add keywords"
+  ],
+  "homepage": "https://github.com/productdevbookcom/ts-bundle-template",
+  "bugs": "https://github.com/productdevbookcom/ts-bundle-template/issues",
+  "author": "add author",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/productdevbookcom/ts-bundle-template.git"
+  },
+  "funding": "https://github.com/sponsors/productdevbook",
+  "engines": {
+    "node": ">=16"
+  },
+  "packageManager": "pnpm@7.28.0",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup --dts",
+    "dev": "tsup --watch",
+    "prepublishOnly": "pnpm run build",
+    "release": "pnpm build && bumpp --commit --push --tag && pnpm publish",
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx .",
+    "lint:fix": "eslint --ext .ts,.tsx,.js,.jsx . --fix",
+    "test": "vitest",
+    "test:watch": "vitest --watch"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.36.0",
+    "@vitest/coverage-c8": "^0.29.3",
+    "bumpp": "^9.0.0",
+    "eslint": "^8.36.0",
+    "tsup": "^6.6.3",
+    "typescript": "^5.0.2",
+    "vite": "^4.2.0",
+    "vitest": "^0.29.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
