@@ -25,7 +25,7 @@ Unlike some i18n libraries, ts-i18n doesn't handle the actual translation of phr
 pnpm add @productdevbook/ts-i18n
 ```
 
-# Usage
+## Usage
 
 ### Translation
 Tell Polyglot what to say by simply giving it a phrases object, where the key is the canonical name of the phrase and the value is the already-translated string.
@@ -199,7 +199,7 @@ const polyglot = new Polyglot({
 
 This can be useful to support locales that polyglot does not support by default or to change the rule definitions.
 
-# Public Instance Methods
+## Public Instance Methods
 
 ### Polyglot.t(key, interpolationOptions)
 
@@ -271,7 +271,7 @@ Completely replace the existing phrases with a new set of phrases. Normally, jus
 ### Polyglot.has(key)
 Returns `true` if the key does exist in the provided phrases, otherwise it will return `false`.
 
-# Public Static Methods
+## Public Static Methods
 
 ### transformPhrase(phrase[, substitutions[, locale]])
 
@@ -292,6 +292,10 @@ Takes a phrase string and transforms it by choosing the correct plural form and 
 - [ ] Add more documentation
 - [ ] Add more examples
 - [ ] Path auto language files import
+
+## Source
+
+The project will continue by translating TS from [airbnb polyglot.js](https://github.com/airbnb/polyglot.js) codes and adding additional features. The codes in some places have changed. Thank you airbnb. :heart:
 
 ## License
 
