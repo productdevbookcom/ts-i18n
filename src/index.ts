@@ -1,7 +1,3 @@
-export function handler(event: any, context: any, callback: any) {
-  console.log('Hello World')
-  callback(null, {
-    statusCode: 200,
-    body: 'Hello World',
-  })
-}
+export type { InterpolationOptions, InterpolationTokenOptions, PluralRules, PolyglotOptions } from './plugin'
+export { Polyglot } from './plugin'
+export { forEach } from './utils'

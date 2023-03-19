@@ -1,32 +1,37 @@
 {
-  "name": "ts-bundle-template",
-  "version": "1.0.0",
-  "description": "add description",
-  "keywords": [
-    "add keywords"
-  ],
-  "homepage": "https://github.com/productdevbookcom/ts-bundle-template",
-  "bugs": "https://github.com/productdevbookcom/ts-bundle-template/issues",
-  "author": "add author",
+  "name": "@productdevbook/ts-i18n",
+  "version": "0.1.0",
+  "description": "Give your JavaScript the ability to speak many languages.",
+  "homepage": "https://github.com/productdevbookcom/ts-i18n",
+  "bugs": "https://github.com/productdevbookcom/ts-i18n/issues",
+  "author": "Mehmet @productdevbook",
   "repository": {
     "type": "git",
-    "url": "https://github.com/productdevbookcom/ts-bundle-template.git"
+    "url": "https://github.com/productdevbookcom/ts-i18n.git"
   },
   "funding": "https://github.com/sponsors/productdevbook",
   "engines": {
     "node": ">=16"
   },
-  "packageManager": "pnpm@7.28.0",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "internationalisation",
+    "translation",
+    "interpolation",
+    "translate",
+    "polyglot",
+    "typescript i18n",
+    "backend i18n"
+  ],
+  "packageManager": "pnpm@7.29.0",
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.js"
+      "types": "./dist/index.d.ts"
     }
   },
-  "main": "./dist/index.js",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "LICENSE",
@@ -45,9 +50,12 @@
   "license": "MIT",
   "devDependencies": {
     "@antfu/eslint-config": "^0.36.0",
+    "@types/has": "^1.0.0",
+    "@types/iterate-iterator": "^1.0.0",
     "@vitest/coverage-c8": "^0.29.3",
     "bumpp": "^9.0.0",
     "eslint": "^8.36.0",
+    "iterate-iterator": "^1.0.2",
     "tsup": "^6.6.3",
     "typescript": "^5.0.2",
     "vite": "^4.2.0",

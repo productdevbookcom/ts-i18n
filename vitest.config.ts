@@ -16,5 +16,8 @@ export default defineConfig({
     include: [
       './test/**',
     ],
+    alias: {
+      '@productdevbook/ts-i18n': 'src/index.ts',
+    },
   },
 })

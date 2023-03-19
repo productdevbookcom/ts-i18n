@@ -2,9 +2,12 @@ lockfileVersion: 5.4
 
 specifiers:
   '@antfu/eslint-config': ^0.36.0
+  '@types/has': ^1.0.0
+  '@types/iterate-iterator': ^1.0.0
   '@vitest/coverage-c8': ^0.29.3
   bumpp: ^9.0.0
   eslint: ^8.36.0
+  iterate-iterator: ^1.0.2
   tsup: ^6.6.3
   typescript: ^5.0.2
   vite: ^4.2.0
@@ -12,9 +15,12 @@ specifiers:
 
 devDependencies:
   '@antfu/eslint-config': 0.36.0_j4766f7ecgqbon3u7zlxn5zszu
+  '@types/has': 1.0.0
+  '@types/iterate-iterator': 1.0.0
   '@vitest/coverage-c8': 0.29.3_vitest@0.29.3
   bumpp: 9.0.0
   eslint: 8.36.0
+  iterate-iterator: 1.0.2
   tsup: 6.6.3_typescript@5.0.2
   typescript: 5.0.2
   vite: 4.2.0
@@ -460,8 +466,16 @@ packages:
     resolution: {integrity: sha512-KnRanxnpfpjUTqTCXslZSEdLfXExwgNxYPdiO2WGUj8+HDjFi8R3k5RVKPeSCzLjCcshCAtVO2QBbVuAV4kTnw==}
     dev: true
 
+  /@types/has/1.0.0:
+    resolution: {integrity: sha512-1J4U6Ipq5B+ytzNa9XWYg+U5cI5nt12a+RiISbKD9a74QDoRVhoBd6GPtd+imkqQRaTGO1l6bvdP1cqsM6dCpw==}
+    dev: true
+
   /@types/istanbul-lib-coverage/2.0.4:
     resolution: {integrity: sha512-z/QT1XN4K4KYuslS23k62yDIDLwLFkzxOuMplDtObz0+y7VqJCaO2o+SPwHCvLFZh7xazvvoor2tA/hPz9ee7g==}
+    dev: true
+
+  /@types/iterate-iterator/1.0.0:
+    resolution: {integrity: sha512-dFIGUv9wKCWfSgALxGwXE09EKmIaEMQq1Ew0ghGrCGlRlmEY7DV3ap/afdKFttrvjgVCIxs4oiaptX+FaTOmOw==}
     dev: true
 
   /@types/json-schema/7.0.11:
@@ -2177,6 +2191,10 @@ packages:
     dependencies:
       html-escaper: 2.0.2
       istanbul-lib-report: 3.0.0
+    dev: true
+
+  /iterate-iterator/1.0.2:
+    resolution: {integrity: sha512-t91HubM4ZDQ70M9wqp+pcNpu8OyJ9UAtXntT/Bcsvp5tZMnz9vRa+IunKXeI8AnfZMTv0jNuVEmGeLSMjVvfPw==}
     dev: true
 
   /joycon/3.1.1:
