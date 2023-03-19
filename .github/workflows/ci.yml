@@ -57,3 +57,10 @@ jobs:
 
       - name: 🧪 Test
         run: pnpm test
+
+      - name: 🧪 Test with coverage
+        run: pnpm coverage
+      
+      - name: 📝 Upload coverage
+        if: always()
+        uses: davelosert/vitest-coverage-report-action@v1
