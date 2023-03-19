@@ -9,6 +9,7 @@
       <a href="./LICENSE"><img src="https://img.shields.io/github/license/productdevbookcom/ts-i18n.svg?style=flat&colorA=002438&colorB=28CF8D" alt="License"></a>
       <a href="https://github.com/productdevbookcom/ts-i18n">
       <img src="https://img.shields.io/github/stars/productdevbookcom/ts-i18n.svg?style=social&label=Star&maxAge=2592000" alt="Github Stars"> </a>
+      <a href="https://chat.productdevbook.com"> <img src="https://img.shields.io/discord/982896043463180310?color=7289da&label=Discord&logo=discord&logoColor=white" alt="Discord"></a>
 </p>
 
 "ts-i18n" is a Typescript library that facilitates internationalization (i18n) in both browser and ES module environments (Node). It offers a lightweight solution for interpolation and pluralization. 
@@ -303,3 +304,5 @@ The project will continue by translating TS from [airbnb polyglot.js](https://gi
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+[productdevbook team](https://github.com/productdevbookcom)
