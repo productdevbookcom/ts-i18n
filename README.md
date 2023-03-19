@@ -36,6 +36,9 @@ Tell Polyglot what to say by simply giving it a phrases object, where the key is
 
 ```ts
 import { Polyglot } from '@productdevbook/ts-i18n'
+
+const polyglot = new Polyglot()
+
 polyglot.extend({
   hello: 'Hello'
 })
