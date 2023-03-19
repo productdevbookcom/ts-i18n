@@ -1,5 +1,8 @@
 # TS I18n
 
+![@productdevbook/ts-i18n](./.github/assets/cover.png)
+
+
 <p>
       <a href="https://www.npmjs.com/package/@productdevbook/ts-i18n"><img src="https://img.shields.io/npm/v/@productdevbook/ts-i18n.svg?style=flat&colorA=002438&colorB=28CF8D" alt="Version"></a>
       <a href="https://www.npmjs.com/package/@productdevbook/ts-i18n"><img src="https://img.shields.io/npm/dm/@productdevbook/ts-i18n.svg?style=flat&colorA=002438&colorB=28CF8D" alt="Downloads"></a>
