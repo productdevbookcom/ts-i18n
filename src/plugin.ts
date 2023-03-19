@@ -1,3 +1,7 @@
+import { getLocales } from './i18n'
+import type { IfAnyOrNever, Path, PathValue } from './types'
+import { warn } from './utils'
+
 export interface InterpolationOptions {
   smart_count?: number | { length: number } | undefined
   _?: string | undefined
@@ -24,11 +28,10 @@ export interface PolyglotOptions {
   interpolation?: InterpolationTokenOptions | undefined
   pluralRules?: PluralRules | undefined
   replace?: (searchValue: RegExp, replaceValue: Function) => any | undefined
-}
-
-const warn = function warn(message: string): void {
-  if (typeof console !== 'undefined' && console.warn)
-    console.warn(`WARNING: ${message}`)
+  loaderOptions?: {
+    path: string
+    typesOutputPath?: string
+  }
 }
 
 const defaultReplace = String.prototype.replace
@@ -231,7 +234,7 @@ function transformPhrase(
   return result
 }
 
-export class Polyglot {
+export class Polyglot<K = Record<string, unknown>> {
   phrases: Record<string, any>
   currentLocale: string
   onMissingKey: Function | null
@@ -239,6 +242,7 @@ export class Polyglot {
   replaceImplementation: Function
   tokenRegex: RegExp
   pluralRules: PluralRules | undefined
+  loaderOptions: PolyglotOptions['loaderOptions']
 
   constructor(options?: PolyglotOptions) {
     const opts = options || {}
@@ -251,6 +255,15 @@ export class Polyglot {
     this.replaceImplementation = opts.replace || defaultReplace
     this.tokenRegex = constructTokenRegex(opts.interpolation)
     this.pluralRules = opts.pluralRules || defaultPluralRules
+
+    if (opts.loaderOptions) {
+      this.loaderOptions = opts.loaderOptions
+
+      if (this.loaderOptions.path) {
+        const lang = getLocales(this.loaderOptions.path)
+        this.extend(JSON.parse(lang as any))
+      }
+    }
   }
 
   locale(newLocale?: string) {
@@ -297,8 +310,9 @@ export class Polyglot {
     this.extend(newPhrases)
   }
 
-  t(key: string, options?: number | InterpolationOptions): string {
-    let phrase, result: string
+  t<P extends Path<K> = any, R = PathValue<K, P>>(key: P, options?: number | InterpolationOptions): IfAnyOrNever<R, string, R> {
+    let phrase: string | undefined
+    let result: string | undefined
     const opts = options == null ? {} : options as InterpolationOptions
     if (typeof this.phrases[key] === 'string') {
       phrase = this.phrases[key]
@@ -331,11 +345,57 @@ export class Polyglot {
         this.replaceImplementation,
       )
     }
-    return result!
+    return result as unknown as IfAnyOrNever<R, string, R>
   }
 
   has(key: string) {
     return this.phrases[key] != null
+  }
+
+  async generateTS() {
+    if (!this.loaderOptions)
+      this.warn('No loader options provided')
+
+    if (this.loaderOptions!.typesOutputPath) {
+      try {
+        const ts = await import('./utils/typescript')
+
+        const { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } = await import('node:fs')
+        const { dirname, extname, join } = await import('node:path')
+        const lang = getLocales(this.loaderOptions!.path)
+        const rawContent = await ts.createTypesFile(JSON.parse(lang as any))
+
+        if (!rawContent) {
+          this.warn('No content generated')
+          return
+        }
+        const outputFile = ts.annotateSourceCode(rawContent)
+
+        mkdirSync(dirname(this.loaderOptions!.typesOutputPath), {
+          recursive: true,
+        })
+        let currentFileContent = null
+        try {
+          currentFileContent = readFileSync(
+            this.loaderOptions!.typesOutputPath,
+            'utf8',
+          )
+        }
+        catch (err) {
+          console.error(err)
+        }
+        if (currentFileContent !== outputFile) {
+          writeFileSync(this.loaderOptions!.typesOutputPath, outputFile)
+          warn(`Types generated in: ${this.loaderOptions!.typesOutputPath}`)
+        }
+        else {
+          warn('No changes detected')
+        }
+      }
+      catch (_) {
+        // NOOP: typescript package not found
+      }
+    }
   }
 
   static transformPhrase(phrase?: any, substitutions?: number | InterpolationOptions, locale?: string) {

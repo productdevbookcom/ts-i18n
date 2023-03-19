@@ -7,5 +7,5 @@ export default <Options>{
   format: ['esm', 'cjs'],
   clean: true,
   dts: true,
-  minify: true,
+  minify: false,
 }
