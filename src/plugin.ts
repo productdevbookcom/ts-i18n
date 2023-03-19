@@ -303,7 +303,7 @@ export class Polyglot {
     if (typeof this.phrases[key] === 'string') {
       phrase = this.phrases[key]
     }
-    else if (typeof options === 'object' && options !== null && typeof opts._ === 'string') {
+    else if (typeof options !== 'object' && options !== null && typeof opts._ === 'string') {
       phrase = opts._
     }
     else if (this.onMissingKey) {

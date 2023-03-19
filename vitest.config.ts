@@ -1,9 +1,6 @@
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
-  optimizeDeps: {
-    entries: [],
-  },
   test: {
     coverage: {
       provider: 'c8', // or 'c8',

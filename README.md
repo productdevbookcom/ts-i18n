@@ -36,23 +36,11 @@ Tell Polyglot what to say by simply giving it a phrases object, where the key is
 
 ```ts
 import { Polyglot } from '@productdevbook/ts-i18n'
-
-const polyglot = new Polyglot({
-  locale: 'en',
-  phrases: {
-    en: {
-      hello: 'Hello',
-      hello_name: 'Hello %{name}',
-      hello_name_plural: 'Hello %{name} and %{count} other person',
-      hello_name_plural_0: 'Hello %{name} and %{count} other people',
-    },
-  },
+polyglot.extend({
+  hello: 'Hello'
 })
 
 polyglot.t('hello') // Hello
-polyglot.t('hello_name', { name: 'John' }) // Hello John
-polyglot.t('hello_name_plural', { name: 'John', count: 1 }) // Hello John and 1 other person
-polyglot.t('hello_name_plural', { name: 'John', count: 2 }) // Hello John and 2 other people
 ```
 You can also pass a mapping at instantiation, using the key phrases:
 
