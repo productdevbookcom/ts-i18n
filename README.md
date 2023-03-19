@@ -111,15 +111,15 @@ polyglot.t('hello_name', { name: 'DeNiro' }) // Hola DeNiro
 
 ### Pluralization
 
-For pluralization to work properly, you need to tell Polyglot what the current locale is. You can use `polyglot.locale("fr")` to set the locale to, for example, French. This method is also a getter:
+For pluralization to work properly, you need to tell Polyglot what the current locale is. You can use `polyglot.locale("tr")` to set the locale to, for example, Turkish. This method is also a getter:
 
 ```ts
-polyglot.locale() // fr
+polyglot.locale() // tr
 ```
 You can also pass this in during instantiation.
 
 ```ts
-const polyglot = new Polyglot({ locale: 'fr' })
+const polyglot = new Polyglot({ locale: 'tr' })
 ```
 
 Currently, the only thing that Polyglot uses this locale setting for is pluralization.
