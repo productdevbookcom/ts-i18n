@@ -21,7 +21,7 @@ Unlike some i18n libraries, ts-i18n doesn't handle the actual translation of phr
 - Typescript support
 - Node.js Version >= 16.0.0
 - No dependencies
-- only ES module support
+- ES module support
 
 ## Installation
 
