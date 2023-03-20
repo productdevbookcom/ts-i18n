@@ -289,8 +289,8 @@ import type { I18nTranslations } from './i18n'
 const i18n = new Polyglot<I18nTranslations>({
   locale: 'en',
   loaderOptions: {
-    path: './test/.cache/locales',
-    typesOutputPath: './test/.cache/i18n.d.ts',
+    path: 'locales',
+    typesOutputPath: 'i18n.d.ts',
   },
 })
 
