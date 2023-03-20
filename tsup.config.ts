@@ -7,6 +7,6 @@ export default <Options>{
   format: ['esm', 'cjs'],
   clean: true,
   dts: true,
-  minify: false,
+  minify: true,
   external: ['typescript'],
 }
