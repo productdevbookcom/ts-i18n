@@ -20,17 +20,46 @@ export interface PluralRules {
 }
 
 export interface PolyglotOptions {
+  /**
+   * The locale to use. If `loaderOptions` used this language you must use same filename.
+   * @default en
+   * @example 'en'
+  */
+  locale: string | undefined
+
+  /**
+   * The phrases to translate.
+   * @default {}
+   * @example { hello: 'Hello' }
+   * @example { hello: 'Hello', hi_name_welcome_to_place: 'Hi, %{name}, welcome to %{place}!' }
+  */
   phrases?: any
-  locale?: string | undefined
+
   allowMissing?: boolean | undefined
   onMissingKey?: ((key: string, options: InterpolationOptions, locale: string) => string) | undefined
   warn?: ((message: string) => void) | undefined
   interpolation?: InterpolationTokenOptions | undefined
   pluralRules?: PluralRules | undefined
   replace?: (searchValue: RegExp, replaceValue: Function) => any | undefined
+
+  /**
+   * Safe TypeScript types for translations.
+   * @example {
+   *   path: 'locales',
+   *   typesOutputPath: 'i18n.d.ts',
+   * }
+  */
   loaderOptions?: {
-    defaultLocale: string
+    /**
+     * The default locale to use.
+     * @example 'locales'
+    */
     path: string
+
+    /**
+     * Typescript types output path.
+     * @example 'i18n.d.ts'
+    */
     typesOutputPath?: string
   }
 }
@@ -245,7 +274,7 @@ export class Polyglot<K = Record<string, unknown>> {
   pluralRules: PluralRules | undefined
   loaderOptions: PolyglotOptions['loaderOptions']
 
-  constructor(options?: PolyglotOptions) {
+  constructor(options: PolyglotOptions) {
     const opts = options || {}
     this.phrases = {}
     this.extend(opts.phrases || {})
@@ -261,7 +290,7 @@ export class Polyglot<K = Record<string, unknown>> {
       this.loaderOptions = opts.loaderOptions
 
       if (this.loaderOptions.path) {
-        const lang = getLocales(this.loaderOptions.path, this.loaderOptions.defaultLocale)
+        const lang = getLocales(this.loaderOptions.path, this.currentLocale)
         this.extend(JSON.parse(lang as any))
         this.generateTS()
       }
@@ -364,7 +393,7 @@ export class Polyglot<K = Record<string, unknown>> {
 
         const { mkdirSync, readFileSync, writeFileSync } = await import('node:fs')
         const { dirname } = await import('node:path')
-        const lang = getLocales(this.loaderOptions!.path, this.loaderOptions!.defaultLocale)
+        const lang = getLocales(this.loaderOptions!.path, this.currentLocale)
         const rawContent = await ts.createTypesFile(JSON.parse(lang as any))
 
         if (!rawContent) {

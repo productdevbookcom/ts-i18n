@@ -1,0 +1,6 @@
+{
+    "hello": "Hello",
+    "hi_name_welcome_to_place": "Hi, %{name}, welcome to %{place}!",
+    "name_your_name_is_name": "'%{name}, your name is %{name}!",
+    "empty_string": ""
+}

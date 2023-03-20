@@ -35,7 +35,9 @@ describe('pluralize', () => {
 describe('locale', () => {
   let polyglot: Polyglot
   beforeEach(() => {
-    polyglot = new Polyglot()
+    polyglot = new Polyglot({
+      locale: 'en',
+    })
   })
 
   it('defaults to "en"', () => {
@@ -54,7 +56,9 @@ describe('locale', () => {
 describe('extend', () => {
   let polyglot: Polyglot
   beforeEach(() => {
-    polyglot = new Polyglot()
+    polyglot = new Polyglot({
+      locale: 'en',
+    })
   })
 
   it('handles null gracefully', () => {
@@ -112,7 +116,9 @@ describe('extend', () => {
 describe('clear', () => {
   let polyglot: Polyglot
   beforeEach(() => {
-    polyglot = new Polyglot()
+    polyglot = new Polyglot({
+      locale: 'en',
+    })
   })
 
   it('wipes out old phrases', () => {
@@ -125,7 +131,9 @@ describe('clear', () => {
 describe('replace', () => {
   let polyglot: Polyglot
   beforeEach(() => {
-    polyglot = new Polyglot()
+    polyglot = new Polyglot({
+      locale: 'en',
+    })
   })
 
   it('wipes out old phrases and replace with new phrases', () => {
@@ -139,7 +147,9 @@ describe('replace', () => {
 describe('unset', () => {
   let polyglot: Polyglot
   beforeEach(() => {
-    polyglot = new Polyglot()
+    polyglot = new Polyglot({
+      locale: 'en',
+    })
   })
 
   it('handles null gracefully', () => {

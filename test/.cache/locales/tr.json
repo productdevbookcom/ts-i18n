@@ -1,0 +1,6 @@
+{
+    "hello": "Merhaba",
+    "hi_name_welcome_to_place": "Merhaba %{name}, %{place}! hoşgeldin!",
+    "name_your_name_is_name": "'%{name}, senin adın %{name}!",
+    "empty_string": ""
+}
