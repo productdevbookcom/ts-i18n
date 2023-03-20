@@ -14,7 +14,7 @@ describe('t', () => {
 
   let polyglot: Polyglot
   beforeEach(() => {
-    polyglot = new Polyglot({ phrases })
+    polyglot = new Polyglot({ phrases, locale: 'en' })
   })
 
   it('translates a simple string', () => {
@@ -58,7 +58,7 @@ describe('t', () => {
   })
 
   it('returns an interpolated key if initialized with allowMissing and translation not found', () => {
-    const instance = new Polyglot({ phrases, allowMissing: true })
+    const instance = new Polyglot({ locale: 'en', phrases, allowMissing: true })
     expect(instance.t('Welcome %{name}', {
       name: 'Robert',
     })).to.equal('Welcome Robert')
@@ -66,7 +66,7 @@ describe('t', () => {
 
   describe('custom interpolation syntax', () => {
     const createWithInterpolation = (interpolation: InterpolationTokenOptions) => {
-      return new Polyglot({ phrases: {}, allowMissing: true, interpolation })
+      return new Polyglot({ locale: 'en', phrases: {}, allowMissing: true, interpolation })
     }
 
     it('interpolates with the specified custom token syntax', () => {
@@ -126,7 +126,7 @@ describe('t', () => {
       },
       'header.sign_in': 'Sign In',
     }
-    const instance = new Polyglot({ phrases: nestedPhrases })
+    const instance = new Polyglot({ locale: 'en', phrases: nestedPhrases })
     expect(instance.t('nav.presentations')).to.equal('Presentations')
     expect(instance.t('nav.hi_user', { user: 'Raph' })).to.equal('Hi, Raph.')
     expect(instance.t('nav.cta.join_now')).to.equal('Join now!')
@@ -135,6 +135,7 @@ describe('t', () => {
 
   it('supports custom replace implementation', () => {
     const instance = new Polyglot({
+      locale: 'en',
       phrases,
       replace(interpolationRegex, callback) {
         const phrase = this as any as string
@@ -207,7 +208,7 @@ describe('t', () => {
         expect(key).to.equal(missingKey)
         done
       }
-      const instance = new Polyglot({ onMissingKey, allowMissing: true })
+      const instance = new Polyglot({ locale: 'en', onMissingKey, allowMissing: true })
       instance.t(missingKey)
     })
   })

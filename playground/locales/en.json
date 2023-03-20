@@ -1,0 +1,8 @@
+{
+    "hello": "world",
+    "foo": "bar",
+    "headeraaa": {
+        "x-foo": "bar %{foo}"
+    },
+    "hello2": "world2"
+}

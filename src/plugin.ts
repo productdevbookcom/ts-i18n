@@ -1,3 +1,7 @@
+import { getLocales } from './i18n'
+import type { IfAnyOrNever, Path, PathValue } from './types'
+import { warn } from './utils'
+
 export interface InterpolationOptions {
   smart_count?: number | { length: number } | undefined
   _?: string | undefined
@@ -16,19 +20,48 @@ export interface PluralRules {
 }
 
 export interface PolyglotOptions {
+  /**
+   * The locale to use. If `loaderOptions` used this language you must use same filename.
+   * @default en
+   * @example 'en'
+  */
+  locale: string | undefined
+
+  /**
+   * The phrases to translate.
+   * @default {}
+   * @example { hello: 'Hello' }
+   * @example { hello: 'Hello', hi_name_welcome_to_place: 'Hi, %{name}, welcome to %{place}!' }
+  */
   phrases?: any
-  locale?: string | undefined
+
   allowMissing?: boolean | undefined
   onMissingKey?: ((key: string, options: InterpolationOptions, locale: string) => string) | undefined
   warn?: ((message: string) => void) | undefined
   interpolation?: InterpolationTokenOptions | undefined
   pluralRules?: PluralRules | undefined
   replace?: (searchValue: RegExp, replaceValue: Function) => any | undefined
-}
 
-const warn = function warn(message: string): void {
-  if (typeof console !== 'undefined' && console.warn)
-    console.warn(`WARNING: ${message}`)
+  /**
+   * Safe TypeScript types for translations.
+   * @example {
+   *   path: 'locales',
+   *   typesOutputPath: 'i18n.d.ts',
+   * }
+  */
+  loaderOptions?: {
+    /**
+     * The default locale to use.
+     * @example 'locales'
+    */
+    path: string
+
+    /**
+     * Typescript types output path.
+     * @example 'i18n.d.ts'
+    */
+    typesOutputPath?: string
+  }
 }
 
 const defaultReplace = String.prototype.replace
@@ -231,7 +264,7 @@ function transformPhrase(
   return result
 }
 
-export class Polyglot {
+export class Polyglot<K = Record<string, unknown>> {
   phrases: Record<string, any>
   currentLocale: string
   onMissingKey: Function | null
@@ -239,8 +272,9 @@ export class Polyglot {
   replaceImplementation: Function
   tokenRegex: RegExp
   pluralRules: PluralRules | undefined
+  loaderOptions: PolyglotOptions['loaderOptions']
 
-  constructor(options?: PolyglotOptions) {
+  constructor(options: PolyglotOptions) {
     const opts = options || {}
     this.phrases = {}
     this.extend(opts.phrases || {})
@@ -251,6 +285,16 @@ export class Polyglot {
     this.replaceImplementation = opts.replace || defaultReplace
     this.tokenRegex = constructTokenRegex(opts.interpolation)
     this.pluralRules = opts.pluralRules || defaultPluralRules
+
+    if (opts.loaderOptions) {
+      this.loaderOptions = opts.loaderOptions
+
+      if (this.loaderOptions.path) {
+        const lang = getLocales(this.loaderOptions.path, this.currentLocale)
+        this.extend(JSON.parse(lang as any))
+        this.generateTS()
+      }
+    }
   }
 
   locale(newLocale?: string) {
@@ -297,8 +341,9 @@ export class Polyglot {
     this.extend(newPhrases)
   }
 
-  t(key: string, options?: number | InterpolationOptions): string {
-    let phrase, result: string
+  t<P extends Path<K> = any, R = PathValue<K, P>>(key: P, options?: number | InterpolationOptions): IfAnyOrNever<R, string, R> {
+    let phrase: string | undefined
+    let result: string | undefined
     const opts = options == null ? {} : options as InterpolationOptions
     if (typeof this.phrases[key] === 'string') {
       phrase = this.phrases[key]
@@ -331,11 +376,57 @@ export class Polyglot {
         this.replaceImplementation,
       )
     }
-    return result!
+    return result as unknown as IfAnyOrNever<R, string, R>
   }
 
   has(key: string) {
     return this.phrases[key] != null
+  }
+
+  async generateTS() {
+    if (!this.loaderOptions)
+      this.warn('No loader options provided')
+
+    if (this.loaderOptions!.typesOutputPath) {
+      try {
+        const ts = await import('./utils/typescript')
+
+        const { mkdirSync, readFileSync, writeFileSync } = await import('node:fs')
+        const { dirname } = await import('node:path')
+        const lang = getLocales(this.loaderOptions!.path, this.currentLocale)
+        const rawContent = await ts.createTypesFile(JSON.parse(lang as any))
+
+        if (!rawContent) {
+          this.warn('No content generated')
+          return
+        }
+        const outputFile = ts.annotateSourceCode(rawContent)
+
+        mkdirSync(dirname(this.loaderOptions!.typesOutputPath), {
+          recursive: true,
+        })
+        let currentFileContent = null
+        try {
+          currentFileContent = readFileSync(
+            this.loaderOptions!.typesOutputPath,
+            'utf8',
+          )
+        }
+        catch (err) {
+          console.error(err)
+        }
+        if (currentFileContent !== outputFile) {
+          writeFileSync(this.loaderOptions!.typesOutputPath, outputFile)
+          warn(`Types generated language in: ${this.loaderOptions!.typesOutputPath}`, 'SUCCESS')
+        }
+        else {
+          warn('No changes language files', 'SUCCESS')
+        }
+      }
+      catch (_) {
+        warn('Typescript package not found')
+      }
+    }
   }
 
   static transformPhrase(phrase?: any, substitutions?: number | InterpolationOptions, locale?: string) {

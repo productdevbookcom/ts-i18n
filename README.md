@@ -22,6 +22,7 @@ Unlike some i18n libraries, ts-i18n doesn't handle the actual translation of phr
 - Node.js Version >= 16.0.0
 - No dependencies
 - ES module support
+- Type Safe and Auto Complete
 
 ## Installation
 
@@ -37,7 +38,9 @@ Tell Polyglot what to say by simply giving it a phrases object, where the key is
 ```ts
 import { Polyglot } from '@productdevbook/ts-i18n'
 
-const polyglot = new Polyglot()
+const polyglot = new Polyglot({
+  locale: 'en',
+})
 
 polyglot.extend({
   hello: 'Hello'
@@ -62,9 +65,7 @@ import { Polyglot } from '@productdevbook/ts-i18n'
 const polyglot = new Polyglot({
   locale: 'en',
   phrases: {
-    en: {
-      hello_name: 'Hello %{name}',
-    },
+    hello_name: 'Hello %{name}',
   },
 })
 
@@ -95,6 +96,7 @@ The substitution variable syntax is customizable.
 
 ```ts
 const polyglot = new Polyglot({
+  locale: 'en',
   phrases: {
     hello_name: 'Hola {{name}}'
   },
@@ -165,6 +167,7 @@ Polyglot provides some default pluralization rules for some locales. You can spe
 
 ```ts
 const polyglot = new Polyglot({
+  locale: 'en',
   pluralRules: {
     pluralTypes: {
       germanLike(n) {
@@ -272,6 +275,28 @@ Returns `true` if the key does exist in the provided phrases, otherwise it will 
 
 Takes a phrase string and transforms it by choosing the correct plural form and interpolating it. This method is used internally by `t`. The correct plural form is selected if substitutions.smart_count is set. You can pass in a number instead of an Object as `substitutions` as a shortcut for `smart_count`. You should pass in a third argument, the locale, to specify the correct plural type. It defaults to `'en'` which has 2 plural forms.
 
+## Type Safety
+
+`@productdevbook/ts-i18n` can generate types! This way your translations will be completely type safe! 🎉
+
+This video click to play:
+[![Watch the video](./.github/assets/type-safe.png)](./.github/assets/type-safe.mp4)
+
+
+```ts
+import { Polyglot } from '@productdevbook/ts-i18n'
+import type { I18nTranslations } from './i18n'
+const i18n = new Polyglot<I18nTranslations>({
+  locale: 'en',
+  loaderOptions: {
+    path: './test/.cache/locales',
+    typesOutputPath: './test/.cache/i18n.d.ts',
+  },
+})
+
+i18n.t('hello') // Hello
+```
+
 
 ## Development
 
@@ -291,6 +316,10 @@ Takes a phrase string and transforms it by choosing the correct plural form and 
 ## Source
 
 The project will continue by translating TS from [airbnb polyglot.js](https://github.com/airbnb/polyglot.js) codes and adding additional features. The codes in some places have changed. Thank you airbnb. :heart:
+
+## Thanks
+
+- Type safety is inspired by [nestjs-i18n](https://github.com/toonvanstrijp/nestjs-i18n/blob/main/src/utils/typescript.ts). Thank you @toonvanstrijp. :heart:
 
 ## License
 
