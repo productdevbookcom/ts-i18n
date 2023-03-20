@@ -7,5 +7,6 @@ export type I18nTranslations = {
     "headeraaa": {
         "x-foo": string;
     };
+    "hello2": string;
 };
 export type I18nPath = Path<I18nTranslations>;

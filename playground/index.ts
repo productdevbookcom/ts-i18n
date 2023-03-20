@@ -2,7 +2,7 @@ import { Polyglot } from '@productdevbook/ts-i18n'
 import type { I18nTranslations } from './i18n'
 
 const polyglot = new Polyglot<I18nTranslations>({
-  locale: 'en',
+  locale: 'tr',
   loaderOptions: {
     path: 'locales',
     typesOutputPath: 'i18n.d.ts',
@@ -11,4 +11,4 @@ const polyglot = new Polyglot<I18nTranslations>({
 
 polyglot.extend()
 
-console.log(polyglot.t('headeraaa.x-foo', { foo: '123123123' })) // Hello
+console.log(polyglot.t('', { foo: '123123123' })) // Hello
