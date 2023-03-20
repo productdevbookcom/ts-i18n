@@ -3,6 +3,7 @@ import type { I18nTranslations } from './i18n'
 
 const polyglot = new Polyglot<I18nTranslations>({
   loaderOptions: {
+    defaultLocale: 'en',
     path: 'locales',
     typesOutputPath: 'i18n.d.ts',
   },
@@ -10,19 +11,4 @@ const polyglot = new Polyglot<I18nTranslations>({
 
 polyglot.extend()
 
-polyglot.generateTS()
-
-console.log(polyglot.t('header.x-foo', { foo: '123123123' })) // Hello
-
-// const data = async () => {
-//   const { t } = await autoPolyglot({
-//     loaderOptions: {
-//       path: 'locales',
-//     },
-//     typesOutputPath: 'i18n.d.ts',
-//   })
-
-//   console.log(t('hello'))
-// }
-
-// data()
+console.log(polyglot.t('headeraaa.x-foo', { foo: '123123123' })) // Hello

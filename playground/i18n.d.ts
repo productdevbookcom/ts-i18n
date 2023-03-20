@@ -4,7 +4,7 @@ import { Path } from "@productdevbook/ts-i18n";
 export type I18nTranslations = {
     "hello": string;
     "foo": string;
-    "headeraa": {
+    "headeraaa": {
         "x-foo": string;
     };
 };
