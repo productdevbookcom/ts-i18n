@@ -3,7 +3,9 @@ export const forEach = (arr: any[], callback: (arg: any) => void) => {
     callback(arr[i])
 }
 
-export const warn = function warn(message: string): void {
+export const warn = function warn(message: string, type?: 'WARNING' | 'SUCCESS'): void {
+  if (!type)
+    type = 'WARNING'
   if (typeof console !== 'undefined' && console.warn)
-    console.warn(`WARNING: ${message}`)
+    console.warn(`${type}: ${message}`)
 }

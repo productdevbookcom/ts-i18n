@@ -5,7 +5,7 @@ import { warn } from './utils'
 
 const ACCEPTED_EXTENSIONS = ['.js', '.json']
 
-export const getLocales = (basepath: string) => {
+export const getLocales = (basepath: string, defaultLocale: string) => {
   if (!basepath || !existsSync(basepath)) {
     warn('missing or invalid locales folder')
     return {}
@@ -21,7 +21,7 @@ export const getLocales = (basepath: string) => {
   return contents
     .filter((entry: Dirent) => {
       ext = extname(entry.name)
-      return (entry.isFile() && ACCEPTED_EXTENSIONS.includes(ext))
+      return (entry.isFile() && ACCEPTED_EXTENSIONS.includes(ext) && entry.name === defaultLocale + ext)
     })
     .reduce((locales, entry) => {
       const name = entry.name.replace(/\.[^/.]+$/, '')

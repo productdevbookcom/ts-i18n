@@ -8,4 +8,5 @@ export default <Options>{
   clean: true,
   dts: true,
   minify: false,
+  external: ['typescript'],
 }

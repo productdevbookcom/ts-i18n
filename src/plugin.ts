@@ -29,6 +29,7 @@ export interface PolyglotOptions {
   pluralRules?: PluralRules | undefined
   replace?: (searchValue: RegExp, replaceValue: Function) => any | undefined
   loaderOptions?: {
+    defaultLocale: string
     path: string
     typesOutputPath?: string
   }
@@ -260,8 +261,9 @@ export class Polyglot<K = Record<string, unknown>> {
       this.loaderOptions = opts.loaderOptions
 
       if (this.loaderOptions.path) {
-        const lang = getLocales(this.loaderOptions.path)
+        const lang = getLocales(this.loaderOptions.path, this.loaderOptions.defaultLocale)
         this.extend(JSON.parse(lang as any))
+        this.generateTS()
       }
     }
   }
@@ -360,9 +362,9 @@ export class Polyglot<K = Record<string, unknown>> {
       try {
         const ts = await import('./utils/typescript')
 
-        const { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } = await import('node:fs')
-        const { dirname, extname, join } = await import('node:path')
-        const lang = getLocales(this.loaderOptions!.path)
+        const { mkdirSync, readFileSync, writeFileSync } = await import('node:fs')
+        const { dirname } = await import('node:path')
+        const lang = getLocales(this.loaderOptions!.path, this.loaderOptions!.defaultLocale)
         const rawContent = await ts.createTypesFile(JSON.parse(lang as any))
 
         if (!rawContent) {
@@ -386,14 +388,14 @@ export class Polyglot<K = Record<string, unknown>> {
         }
         if (currentFileContent !== outputFile) {
           writeFileSync(this.loaderOptions!.typesOutputPath, outputFile)
-          warn(`Types generated in: ${this.loaderOptions!.typesOutputPath}`)
+          warn(`Types generated language in: ${this.loaderOptions!.typesOutputPath}`, 'SUCCESS')
         }
         else {
-          warn('No changes detected')
+          warn('No changes language files', 'SUCCESS')
         }
       }
       catch (_) {
-        // NOOP: typescript package not found
+        warn('Typescript package not found')
       }
     }
   }
