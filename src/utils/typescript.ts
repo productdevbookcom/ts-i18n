@@ -1,3 +1,6 @@
+// Source: https://github.com/toonvanstrijp/nestjs-i18n/blob/main/src/utils/typescript.ts
+// Thank you @toonvanstrijp
+
 import type { TypeElement } from 'typescript'
 import { ListFormat, ScriptKind, ScriptTarget, SyntaxKind, createPrinter, createSourceFile, factory } from 'typescript'
 

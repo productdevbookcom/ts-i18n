@@ -22,6 +22,7 @@ Unlike some i18n libraries, ts-i18n doesn't handle the actual translation of phr
 - Node.js Version >= 16.0.0
 - No dependencies
 - ES module support
+- Type Safe and Auto Complete
 
 ## Installation
 
@@ -315,6 +316,10 @@ i18n.t('hello') // Hello
 ## Source
 
 The project will continue by translating TS from [airbnb polyglot.js](https://github.com/airbnb/polyglot.js) codes and adding additional features. The codes in some places have changed. Thank you airbnb. :heart:
+
+## Thanks
+
+- Type safety is inspired by [nestjs-i18n](https://github.com/toonvanstrijp/nestjs-i18n/blob/main/src/utils/typescript.ts). Thank you @toonvanstrijp. :heart:
 
 ## License
 
