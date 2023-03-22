@@ -61,6 +61,12 @@ export interface PolyglotOptions {
      * @example 'i18n.d.ts'
     */
     typesOutputPath?: string
+
+    /**
+     * Auto generate types for locales.
+     * @default true
+    */
+    autoGenerate?: boolean
   }
 }
 
@@ -264,7 +270,11 @@ function transformPhrase(
   return result
 }
 
-export class Polyglot<K = Record<string, unknown>> {
+type LocaleMessage = Record<string, unknown>
+
+export interface DefineLocaleMessage extends LocaleMessage {}
+
+export class Polyglot<K extends DefineLocaleMessage> {
   phrases: Record<string, any>
   currentLocale: string
   onMissingKey: Function | null
@@ -287,13 +297,17 @@ export class Polyglot<K = Record<string, unknown>> {
     this.pluralRules = opts.pluralRules || defaultPluralRules
 
     if (opts.loaderOptions) {
+      opts.loaderOptions.autoGenerate = opts.loaderOptions.autoGenerate || true
+
       this.loaderOptions = opts.loaderOptions
 
       if (this.loaderOptions.path) {
         const lang = getLocales(this.loaderOptions.path, this.currentLocale)
         this.extend(JSON.parse(lang as any))
-        this.generateTS()
       }
+
+      if (this.loaderOptions.autoGenerate)
+        this.generateTS()
     }
   }
 
