@@ -401,45 +401,50 @@ export class Polyglot<K extends DefineLocaleMessage> {
     if (!this.loaderOptions)
       this.warn('No loader options provided')
 
-    if (this.loaderOptions!.typesOutputPath) {
-      try {
-        const ts = await import('./utils/typescript')
-
-        const { mkdirSync, readFileSync, writeFileSync } = await import('node:fs')
-        const { dirname } = await import('node:path')
-        const lang = getLocales(this.loaderOptions!.path, this.currentLocale)
-        const rawContent = await ts.createTypesFile(JSON.parse(lang as any))
-
-        if (!rawContent) {
-          this.warn('No content generated')
-          return
-        }
-        const outputFile = ts.annotateSourceCode(rawContent)
-
-        mkdirSync(dirname(this.loaderOptions!.typesOutputPath), {
-          recursive: true,
-        })
-        let currentFileContent = null
+    try {
+      if (this.loaderOptions!.typesOutputPath) {
         try {
-          currentFileContent = readFileSync(
-            this.loaderOptions!.typesOutputPath,
-            'utf8',
-          )
+          const ts = await import('./utils/typescript')
+
+          const { mkdirSync, readFileSync, writeFileSync } = await import('node:fs')
+          const { dirname } = await import('node:path')
+          const lang = getLocales(this.loaderOptions!.path, this.currentLocale)
+          const rawContent = await ts.createTypesFile(JSON.parse(lang as any))
+
+          if (!rawContent) {
+            this.warn('No content generated')
+            return
+          }
+          const outputFile = ts.annotateSourceCode(rawContent)
+
+          mkdirSync(dirname(this.loaderOptions!.typesOutputPath), {
+            recursive: true,
+          })
+          let currentFileContent = null
+          try {
+            currentFileContent = readFileSync(
+              this.loaderOptions!.typesOutputPath,
+              'utf8',
+            )
+          }
+          catch (err) {
+            console.error(err)
+          }
+          if (currentFileContent !== outputFile) {
+            writeFileSync(this.loaderOptions!.typesOutputPath, outputFile)
+            warn(`Types generated language in: ${this.loaderOptions!.typesOutputPath}`, 'SUCCESS')
+          }
+          else {
+            warn('No changes language files', 'SUCCESS')
+          }
         }
-        catch (err) {
-          console.error(err)
-        }
-        if (currentFileContent !== outputFile) {
-          writeFileSync(this.loaderOptions!.typesOutputPath, outputFile)
-          warn(`Types generated language in: ${this.loaderOptions!.typesOutputPath}`, 'SUCCESS')
-        }
-        else {
-          warn('No changes language files', 'SUCCESS')
+        catch (_) {
+          warn('Typescript package not found')
         }
       }
-      catch (_) {
-        warn('Typescript package not found')
-      }
+    }
+    catch (error) {
+      console.log(error)
     }
   }
 
