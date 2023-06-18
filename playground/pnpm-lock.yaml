@@ -1,12 +1,12 @@
 lockfileVersion: '6.0'
 
 overrides:
-  '@productdevbook/ts-i18n': ^1.2.0
+  '@productdevbook/ts-i18n': ^1.2.1
 
 dependencies:
   '@productdevbook/ts-i18n':
-    specifier: ^1.2.0
-    version: 1.2.0
+    specifier: ^1.2.1
+    version: 1.2.1
   jiti:
     specifier: ^1.18.2
     version: 1.18.2
@@ -18,8 +18,8 @@ devDependencies:
 
 packages:
 
-  /@productdevbook/ts-i18n@1.2.0:
-    resolution: {integrity: sha512-+aiWaMiZ8Wx7436sEpA5WwJdrF1fD0Ex2T1OqFFb/tjgxQfAtv314/v3nfLB/xRBgXxi5oMyhzFrosjcmvGDtA==}
+  /@productdevbook/ts-i18n@1.2.1:
+    resolution: {integrity: sha512-physFfwb1654UhH6uGOi7h3mcTswdYx86IormTZ/VZ8KPkjIwRRJNXyorgOh5VosLRU07JRTgE98/8Vip9SkHw==}
     engines: {node: '>=16'}
     dev: false
 
