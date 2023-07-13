@@ -14,7 +14,7 @@
     "jiti": "^1.18.2"
   },
   "devDependencies": {
-    "typescript": "^5.0.4"
+    "typescript": "^5.1.6"
   },
   "resolutions": {
     "@productdevbook/ts-i18n": "^1.2.1"
