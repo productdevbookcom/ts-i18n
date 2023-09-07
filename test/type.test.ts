@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { Polyglot } from '@productdevbook/ts-i18n'
 import type { I18nTranslations } from './.cache/i18n'
+
 // The two tests marked with concurrent will be run in parallel
 describe('Type safety EN', () => {
   let polyglot: Polyglot<I18nTranslations>

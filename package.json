@@ -24,7 +24,7 @@
     "typescript i18n",
     "backend i18n"
   ],
-  "packageManager": "pnpm@7.29.0",
+  "packageManager": "pnpm@8.7.0",
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -52,17 +52,17 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@antfu/eslint-config": "^0.37.0",
+    "@antfu/eslint-config": "^0.41.0",
     "@types/has": "^1.0.0",
     "@types/iterate-iterator": "^1.0.0",
-    "@vitest/coverage-c8": "^0.29.3",
-    "bumpp": "^9.0.0",
-    "eslint": "^8.36.0",
+    "@vitest/coverage-v8": "^0.34.3",
+    "bumpp": "^9.2.0",
+    "eslint": "^8.48.0",
     "iterate-iterator": "^1.0.2",
     "tsup": "^7.2.0",
-    "typescript": "^5.0.2",
+    "typescript": "^5.2.2",
     "vite": "^4.2.0",
-    "vitest": "^0.29.3"
+    "vitest": "^0.34.3"
   },
   "publishConfig": {
     "access": "public"

@@ -5,7 +5,7 @@ import { warn } from './utils'
 
 const ACCEPTED_EXTENSIONS = ['.js', '.json']
 
-export const getLocales = (basepath: string, defaultLocale: string) => {
+export function getLocales(basepath: string, defaultLocale: string) {
   if (!basepath || !existsSync(basepath)) {
     warn('missing or invalid locales folder')
     return {}

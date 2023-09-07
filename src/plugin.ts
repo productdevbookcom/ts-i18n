@@ -36,11 +36,11 @@ export interface PolyglotOptions {
   phrases?: any
 
   allowMissing?: boolean | undefined
-  onMissingKey?: ((key: string, options: InterpolationOptions, locale: string) => string) | undefined
-  warn?: ((message: string) => void) | undefined
+  onMissingKey?: ((key: string, options: InterpolationOptions, locale: string, tokenRegex: RegExp, pluralRules: PluralRules | undefined, replaceImplementation: any) => string) | null | undefined
+  warn?: ((message: string) => void) | undefined | any
   interpolation?: InterpolationTokenOptions | undefined
   pluralRules?: PluralRules | undefined
-  replace?: (searchValue: RegExp, replaceValue: Function) => any | undefined
+  replace?: (searchValue: RegExp, replaceValue: any) => any | undefined
 
   /**
    * Safe TypeScript types for translations.
@@ -234,7 +234,7 @@ function transformPhrase(
   locale?: string,
   tokenRegex?: RegExp,
   pluralRules?: PluralRules | undefined,
-  replaceImplementation?: Function,
+  replaceImplementation?: PolyglotOptions['replace'] | undefined | any,
 ): string {
   if (typeof phrase !== 'string')
     throw new TypeError('Polyglot.transformPhrase expects argument #1 to be string')
@@ -277,9 +277,9 @@ export interface DefineLocaleMessage extends LocaleMessage {}
 export class Polyglot<K extends DefineLocaleMessage> {
   phrases: Record<string, any>
   currentLocale: string
-  onMissingKey: Function | null
-  warn: Function
-  replaceImplementation: Function
+  onMissingKey: PolyglotOptions['onMissingKey'] | null
+  warn: PolyglotOptions['warn'] | undefined
+  replaceImplementation: PolyglotOptions['replace'] | undefined | any
   tokenRegex: RegExp
   pluralRules: PluralRules | undefined
   loaderOptions: PolyglotOptions['loaderOptions']
@@ -444,7 +444,7 @@ export class Polyglot<K extends DefineLocaleMessage> {
       }
     }
     catch (error) {
-      console.log(error)
+      console.warn(error)
     }
   }
 
