@@ -297,6 +297,13 @@ const i18n = new Polyglot<I18nTranslations>({
 i18n.t('hello') // Hello
 ```
 
+## Sponsors
+
+<p align="center">
+  <a href="https://cdn.jsdelivr.net/gh/productdevbook/static/sponsors.svg">
+    <img alt="sponsors" src='https://cdn.jsdelivr.net/gh/productdevbook/static/sponsors.svg'/>
+  </a>
+</p>
 
 ## Development
 
