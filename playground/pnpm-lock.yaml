@@ -5,12 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@productdevbook/ts-i18n': ^1.2.1
+  '@productdevbook/ts-i18n': ^1.3.0
 
 dependencies:
   '@productdevbook/ts-i18n':
-    specifier: ^1.2.1
-    version: 1.2.1
+    specifier: ^1.3.0
+    version: 1.3.0
   jiti:
     specifier: ^1.20.0
     version: 1.20.0
@@ -22,8 +22,8 @@ devDependencies:
 
 packages:
 
-  /@productdevbook/ts-i18n@1.2.1:
-    resolution: {integrity: sha512-physFfwb1654UhH6uGOi7h3mcTswdYx86IormTZ/VZ8KPkjIwRRJNXyorgOh5VosLRU07JRTgE98/8Vip9SkHw==}
+  /@productdevbook/ts-i18n@1.3.0:
+    resolution: {integrity: sha512-BU/3wWyL76NJ0LFWdXWyTPKwtJjr3YZaYmtwuZtJbTh3CpIO+hQdvCKpOqS/ntEg+0Nj0zXoZg0IORCe8Gfx2Q==}
     engines: {node: '>=16'}
     dev: false
 
