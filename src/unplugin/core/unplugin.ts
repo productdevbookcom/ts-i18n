@@ -1,5 +1,4 @@
 import { resolve } from 'node:path'
-import type { UnpluginFactory } from 'unplugin'
 import { createUnplugin } from 'unplugin'
 import type { Options } from '../types'
 import { generateTS } from './generate'
