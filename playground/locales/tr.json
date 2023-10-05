@@ -2,7 +2,7 @@
   "hello": "world",
   "foo": "bar",
   "headeraaa": {
-    "x-foo": "bar %{foo}"
+    "x-foo": "bar %{tttt} %{bbb}"
   },
-  "hello2": "TRTRTR"
+  "hello2": "world2"
 }

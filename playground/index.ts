@@ -7,9 +7,10 @@ const polyglot = new Polyglot<I18nTranslations>({
     path: 'locales',
     typesOutputPath: 'i18n.d.ts',
   },
+  errorOnMissing: true,
 })
 
 polyglot.extend()
 
 // eslint-disable-next-line no-console
-console.log(polyglot.t('foo', { foo: '123123123' })) // Hello
+console.log(polyglot.t('headeraaa.x-foo', { tttt: '123123123' })) // Hello

@@ -1,3 +1,5 @@
+import { consola } from 'consola'
+import c from 'picocolors'
 import { getLocales } from './i18n'
 import type { IfAnyOrNever, Path, PathValue } from './types'
 import { warn } from './utils'
@@ -68,6 +70,11 @@ export interface PolyglotOptions {
      */
     autoGenerate?: boolean
   }
+
+  /**
+   * @default false
+   */
+  errorOnMissing?: boolean | undefined
 }
 
 const defaultReplace = String.prototype.replace
@@ -267,6 +274,7 @@ function transformPhrase(
       return expression
     return options[argument]
   })
+
   return result
 }
 
@@ -283,6 +291,7 @@ export class Polyglot<K extends DefineLocaleMessage> {
   tokenRegex: RegExp
   pluralRules: PluralRules | undefined
   loaderOptions: PolyglotOptions['loaderOptions']
+  errorOnMissing: PolyglotOptions['errorOnMissing'] | undefined
 
   constructor(options: PolyglotOptions) {
     const opts = options || {}
@@ -295,6 +304,7 @@ export class Polyglot<K extends DefineLocaleMessage> {
     this.replaceImplementation = opts.replace || defaultReplace
     this.tokenRegex = constructTokenRegex(opts.interpolation)
     this.pluralRules = opts.pluralRules || defaultPluralRules
+    this.errorOnMissing = opts.errorOnMissing || false
 
     if (opts.loaderOptions) {
       opts.loaderOptions.autoGenerate = opts.loaderOptions.autoGenerate || true
@@ -390,6 +400,16 @@ export class Polyglot<K extends DefineLocaleMessage> {
         this.replaceImplementation,
       )
     }
+
+    if (result && this.errorOnMissing) {
+      const matches = result.match(/%{([^}]+)}/g)
+      if (matches) {
+        matches.forEach((match: string) => {
+          consola.error(new Error(`translation "${c.green(key)}" has unused variable "${c.red(match.replace(/%{|}/g, ''))}"`).stack)
+        })
+      }
+    }
+
     return result as unknown as IfAnyOrNever<R, string, R>
   }
 
