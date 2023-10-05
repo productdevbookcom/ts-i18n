@@ -1,7 +1,5 @@
-import { beforeEach, describe, expect, it, vi, vitest } from 'vitest'
+import { beforeEach, describe, expect, it, vitest } from 'vitest'
 import { Polyglot } from '@productdevbook/ts-i18n'
-import consola from 'consola'
-import c from 'picocolors'
 import type { I18nTranslations } from './.cache/i18n'
 
 // The two tests marked with concurrent will be run in parallel
