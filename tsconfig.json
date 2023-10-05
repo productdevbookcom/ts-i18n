@@ -7,8 +7,14 @@
     "lib": [
       "ESNext"
     ],
+    "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "node",
+    "paths": {
+      "@productdevbook/ts-i18n": [
+        "src/index.ts"
+      ]
+    },
     "resolveJsonModule": true,
     "strict": true,
     "esModuleInterop": true,

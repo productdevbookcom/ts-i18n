@@ -1,101 +1,134 @@
-// Source: https://github.com/toonvanstrijp/nestjs-i18n/blob/main/src/utils/typescript.ts
-// Thank you @toonvanstrijp
+import * as ts from 'typescript'
 
-import type { TypeElement } from 'typescript'
-import { ListFormat, ScriptKind, ScriptTarget, SyntaxKind, createPrinter, createSourceFile, factory } from 'typescript'
-
-export async function convertObjectToTypeDefinition(object: any): Promise<TypeElement[]> {
+export async function convertObjectToTypeDefinition(object: any): Promise<ts.TypeElement[]> {
+  const typeElements: ts.TypeElement[] = []
   switch (typeof object) {
     case 'object':
-      return Promise.all(Object.keys(object).map(async (key) => {
-        if (typeof object[key] === 'string') {
-          return factory.createPropertySignature(
-            undefined,
-            factory.createStringLiteral(key),
-            undefined,
-            factory.createKeywordTypeNode(SyntaxKind.StringKeyword),
-          )
-        }
-        if (Array.isArray(object[key])) {
-          return factory.createPropertySignature(
-            undefined,
-            factory.createStringLiteral(key),
-            undefined,
-            factory.createTupleTypeNode(
-              Array(object[key].length).fill(
-                factory.createKeywordTypeNode(SyntaxKind.StringKeyword),
+      await Promise.all(
+        Object.keys(object).map(async (key) => {
+          if (typeof object[key] === 'string') {
+            const stringValue = object[key]
+            // Check if the string contains '%{fooxx}' or '%{bbb}' pattern
+            const matches = stringValue.match(/%{([^}]+)}/g)
+            if (matches) {
+              const variables = matches.map((match: string) =>
+                match.substring(2, match.length - 1), // Remove '%{' and '}'
+              )
+              typeElements.push(
+                ts.factory.createPropertySignature(
+                  undefined,
+                  ts.factory.createStringLiteral(key),
+                  undefined,
+                  ts.factory.createTypeLiteralNode([
+                    ts.factory.createPropertySignature(
+                      undefined,
+                      ts.factory.createStringLiteral('variables'),
+                      undefined,
+                      ts.factory.createTypeLiteralNode(
+                        variables.map((variable: string) =>
+                          ts.factory.createPropertySignature(
+                            undefined,
+                            ts.factory.createStringLiteral(variable),
+                            undefined,
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]),
+                ),
+              )
+            }
+            else {
+              typeElements.push(
+                ts.factory.createPropertySignature(
+                  undefined,
+                  ts.factory.createStringLiteral(key),
+                  undefined,
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                ),
+              )
+            }
+          }
+          else if (typeof object[key] === 'object') {
+            const innerTypeElements = await convertObjectToTypeDefinition(object[key])
+            typeElements.push(
+              ts.factory.createPropertySignature(
+                undefined,
+                ts.factory.createStringLiteral(key),
+                undefined,
+                ts.factory.createTypeLiteralNode(innerTypeElements),
               ),
-            ),
-          )
-        }
-        return factory.createPropertySignature(
-          undefined,
-          factory.createStringLiteral(key),
-          undefined,
-          factory.createTypeLiteralNode(
-            await convertObjectToTypeDefinition(object[key]),
-          ),
-        )
-      }))
+            )
+          }
+        }),
+      )
+      return typeElements
   }
-
   return []
 }
 
-const printer = createPrinter()
-
 export async function createTypesFile(object: any) {
-  const sourceFile = createSourceFile(
+  const sourceFile = ts.createSourceFile(
     'placeholder.ts',
     '',
-    ScriptTarget.ESNext,
+    ts.ScriptTarget.ESNext,
     true,
-    ScriptKind.TS,
+    ts.ScriptKind.TS,
   )
 
-  const i18nTranslationsType = factory.createTypeAliasDeclaration(
-    [factory.createModifier(SyntaxKind.ExportKeyword)],
-    factory.createIdentifier('I18nTranslations'),
+  const i18nTranslationsType = ts.factory.createTypeAliasDeclaration(
+    [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+    ts.factory.createIdentifier('I18nTranslations'),
     undefined,
-    factory.createTypeLiteralNode(await convertObjectToTypeDefinition(object)),
+    ts.factory.createTypeLiteralNode(
+      await convertObjectToTypeDefinition(object),
+    ),
   )
 
-  const nodes = factory.createNodeArray([
-    factory.createImportDeclaration(
+  const nodes = ts.factory.createNodeArray([
+    ts.factory.createImportDeclaration(
       undefined,
-      factory.createImportClause(
+      ts.factory.createImportClause(
         false,
         undefined,
-        factory.createNamedImports([
-          factory.createImportSpecifier(
+        ts.factory.createNamedImports([
+          ts.factory.createImportSpecifier(
             false,
             undefined,
-            factory.createIdentifier('Path'),
+            ts.factory.createIdentifier('Path'),
           ),
         ]),
       ),
-      factory.createStringLiteral('@productdevbook/ts-i18n'),
+      ts.factory.createStringLiteral('nestjs-i18n'),
       undefined,
     ),
     i18nTranslationsType,
-    factory.createTypeAliasDeclaration(
-      [factory.createModifier(SyntaxKind.ExportKeyword)],
-      factory.createIdentifier('I18nPath'),
+    ts.factory.createTypeAliasDeclaration(
+      [ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],
+      ts.factory.createIdentifier('I18nPath'),
       undefined,
-      factory.createTypeReferenceNode(factory.createIdentifier('Path'), [
-        factory.createTypeReferenceNode(
-          factory.createIdentifier('I18nTranslations'),
+      ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Path'), [
+        ts.factory.createTypeReferenceNode(
+          ts.factory.createIdentifier('I18nTranslations'),
           undefined,
         ),
       ]),
     ),
   ])
 
-  return printer.printList(ListFormat.MultiLine, nodes, sourceFile)
+  const printer = ts.createPrinter()
+  return printer.printList(ts.ListFormat.MultiLine, nodes, sourceFile)
 }
 
 export function annotateSourceCode(code: string) {
+  const eslintDisable = `/* eslint-disable */`
+  const prettierDisable = `/* prettier-ignore */`
+  const tsIgnore = `// @ts-ignore`
   return `/* DO NOT EDIT, file generated by @productdevbook/ts-i18n */
+${eslintDisable}
+${prettierDisable}
+${tsIgnore}
 
 ${code}`
 }

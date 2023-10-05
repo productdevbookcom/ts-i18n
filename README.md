@@ -19,8 +19,7 @@ Unlike some i18n libraries, ts-i18n doesn't handle the actual translation of phr
 ## Features
 
 - Typescript support
-- Node.js Version >= 16.0.0
-- No dependencies
+- Node.js Version >= 18.0.0
 - ES module support
 - Type Safe and Auto Complete
 
@@ -296,6 +295,20 @@ const i18n = new Polyglot<I18nTranslations>({
 })
 
 i18n.t('hello') // Hello
+```
+
+### Error Missing Translation
+
+If you want to throw an error when a translation is missing, you can use the `errorOnMissing` option.
+
+```ts
+const i18n = new Polyglot({
+  locale: 'en',
+  loaderOptions: {
+    path: 'locales',
+  },
+  errorOnMissing: true,
+})
 ```
 
 ## Sponsors
