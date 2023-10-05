@@ -11,4 +11,5 @@ const polyglot = new Polyglot<I18nTranslations>({
 
 polyglot.extend()
 
-console.log(polyglot.t('', { foo: '123123123' })) // Hello
+// eslint-disable-next-line no-console
+console.log(polyglot.t('foo', { foo: '123123123' })) // Hello

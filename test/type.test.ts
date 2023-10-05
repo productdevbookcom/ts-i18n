@@ -3,7 +3,7 @@ import { Polyglot } from '@productdevbook/ts-i18n'
 import type { I18nTranslations } from './.cache/i18n'
 
 // The two tests marked with concurrent will be run in parallel
-describe('Type safety EN', () => {
+describe('type safety EN', () => {
   let polyglot: Polyglot<I18nTranslations>
   beforeEach(() => {
     polyglot = new Polyglot<I18nTranslations>({
@@ -27,7 +27,7 @@ describe('Type safety EN', () => {
   })
 })
 
-describe('Type safety TR', () => {
+describe('type safety TR', () => {
   let polyglot: Polyglot<I18nTranslations>
   beforeEach(() => {
     polyglot = new Polyglot<I18nTranslations>({
