@@ -1,5 +1,3 @@
-import { consola } from 'consola'
-import c from 'picocolors'
 import { getLocales } from './i18n'
 import type { IfAnyOrNever, Path, PathValue } from './types'
 import { warn } from './utils'
@@ -405,7 +403,8 @@ export class Polyglot<K extends DefineLocaleMessage> {
       const matches = result.match(/%{([^}]+)}/g)
       if (matches) {
         matches.forEach((match: string) => {
-          consola.error(new Error(`translation "${c.green(key)}" has unused variable "${c.red(match.replace(/%{|}/g, ''))}"`).stack)
+          // eslint-disable-next-line no-console
+          console.info(new Error(`translation '${key}' has unused variable key '${match.replace(/%{|}/g, '')}'`).stack)
         })
       }
     }

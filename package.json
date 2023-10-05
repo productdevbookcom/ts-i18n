@@ -54,10 +54,6 @@
   "peerDependencies": {
     "typescript": "^5.2.2"
   },
-  "dependencies": {
-    "consola": "^3.2.3",
-    "picocolors": "^1.0.0"
-  },
   "devDependencies": {
     "@antfu/eslint-config": "1.0.0-beta.19",
     "@types/has": "^1.0.0",
