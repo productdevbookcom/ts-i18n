@@ -24,7 +24,7 @@ export interface PolyglotOptions {
    * The locale to use. If `loaderOptions` used this language you must use same filename.
    * @default en
    * @example 'en'
-  */
+   */
   locale: string | undefined
 
   /**
@@ -32,7 +32,7 @@ export interface PolyglotOptions {
    * @default {}
    * @example { hello: 'Hello' }
    * @example { hello: 'Hello', hi_name_welcome_to_place: 'Hi, %{name}, welcome to %{place}!' }
-  */
+   */
   phrases?: any
 
   allowMissing?: boolean | undefined
@@ -48,24 +48,24 @@ export interface PolyglotOptions {
    *   path: 'locales',
    *   typesOutputPath: 'i18n.d.ts',
    * }
-  */
+   */
   loaderOptions?: {
     /**
      * The default locale to use.
      * @example 'locales'
-    */
+     */
     path: string
 
     /**
      * Typescript types output path.
      * @example 'i18n.d.ts'
-    */
+     */
     typesOutputPath?: string
 
     /**
      * Auto generate types for locales.
      * @default true
-    */
+     */
     autoGenerate?: boolean
   }
 }
@@ -404,7 +404,7 @@ export class Polyglot<K extends DefineLocaleMessage> {
     try {
       if (this.loaderOptions!.typesOutputPath) {
         try {
-          const ts = await import('./utils/typescript')
+          const ts = await import('./utils/typescript.js')
 
           const { mkdirSync, readFileSync, writeFileSync } = await import('node:fs')
           const { dirname } = await import('node:path')

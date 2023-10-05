@@ -1,8 +1,8 @@
 {
-    "hello": "world",
-    "foo": "bar",
-    "headeraaa": {
-        "x-foo": "bar %{foo}"
-    },
-    "hello2": "TRTRTR"
+  "hello": "world",
+  "foo": "bar",
+  "headeraaa": {
+    "x-foo": "bar %{foo}"
+  },
+  "hello2": "TRTRTR"
 }

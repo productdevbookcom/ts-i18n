@@ -1,22 +1,19 @@
 {
   "name": "playground",
-  "version": "1.0.0",
   "type": "module",
-  "main": "index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
+  "version": "1.0.0",
   "author": "",
   "license": "ISC",
+  "keywords": [],
+  "main": "index.ts",
+  "scripts": {
+    "dev": "jiti index.ts"
+  },
   "dependencies": {
-    "@productdevbook/ts-i18n": "^1.2.1",
+    "@productdevbook/ts-i18n": "workspace:^",
     "jiti": "^1.20.0"
   },
   "devDependencies": {
     "typescript": "^5.2.2"
-  },
-  "resolutions": {
-    "@productdevbook/ts-i18n": "^1.2.1"
   }
 }

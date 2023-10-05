@@ -286,6 +286,7 @@ This video click to play:
 ```ts
 import { Polyglot } from '@productdevbook/ts-i18n'
 import type { I18nTranslations } from './i18n'
+
 const i18n = new Polyglot<I18nTranslations>({
   locale: 'en',
   loaderOptions: {
