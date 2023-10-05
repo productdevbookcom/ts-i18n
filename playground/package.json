@@ -11,9 +11,7 @@
   },
   "dependencies": {
     "@productdevbook/ts-i18n": "workspace:^",
-    "consola": "^3.2.3",
-    "jiti": "^1.20.0",
-    "picocolors": "^1.0.0"
+    "jiti": "^1.20.0"
   },
   "devDependencies": {
     "typescript": "^5.2.2"
