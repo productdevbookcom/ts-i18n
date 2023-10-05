@@ -7,13 +7,15 @@
   "keywords": [],
   "main": "index.ts",
   "scripts": {
-    "dev": "jiti index.ts"
+    "dev": "jiti index.ts",
+    "dev:vite": "nodemon -w '../src/**/*.ts' -e .ts -x vite"
   },
   "dependencies": {
     "@productdevbook/ts-i18n": "workspace:^",
     "jiti": "^1.20.0"
   },
   "devDependencies": {
+    "nodemon": "^3.0.1",
     "typescript": "^5.2.2"
   }
 }
