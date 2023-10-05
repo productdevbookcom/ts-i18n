@@ -297,6 +297,20 @@ const i18n = new Polyglot<I18nTranslations>({
 i18n.t('hello') // Hello
 ```
 
+### Error Missing Translation
+
+If you want to throw an error when a translation is missing, you can use the `errorOnMissing` option.
+
+```ts
+const i18n = new Polyglot({
+  locale: 'en',
+  loaderOptions: {
+    path: 'locales',
+  },
+  errorOnMissing: true,
+})
+```
+
 ## Sponsors
 
 <p align="center">
