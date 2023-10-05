@@ -10,7 +10,6 @@ describe('type safety EN', () => {
       locale: 'en',
       loaderOptions: {
         path: './test/.cache/locales',
-        typesOutputPath: './test/.cache/i18n.d.ts',
       },
     })
   })
@@ -34,7 +33,6 @@ describe('type safety TR', () => {
       locale: 'tr',
       loaderOptions: {
         path: './test/.cache/locales',
-        typesOutputPath: './test/.cache/i18n.d.ts',
       },
     })
   })
@@ -58,7 +56,6 @@ describe('errorOnMissing', () => {
       locale: 'tr',
       loaderOptions: {
         path: './test/.cache/locales',
-        typesOutputPath: './test/.cache/i18n.d.ts',
       },
       errorOnMissing: true,
     })

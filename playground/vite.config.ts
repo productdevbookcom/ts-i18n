@@ -4,7 +4,7 @@ import Unplugin from '@productdevbook/ts-i18n/vite'
 export default defineConfig({
   plugins: [
     Unplugin({
-      exportFilePath: 'dene.ts',
+      exportFilePath: 'i18n.d.ts',
       localesFolder: 'locales',
       selectLanguage: 'en',
     }),

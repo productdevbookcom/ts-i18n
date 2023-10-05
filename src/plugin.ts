@@ -46,7 +46,6 @@ export interface PolyglotOptions {
    * Safe TypeScript types for translations.
    * @example {
    *   path: 'locales',
-   *   typesOutputPath: 'i18n.d.ts',
    * }
    */
   loaderOptions?: {
@@ -55,18 +54,6 @@ export interface PolyglotOptions {
      * @example 'locales'
      */
     path: string
-
-    /**
-     * Typescript types output path.
-     * @example 'i18n.d.ts'
-     */
-    typesOutputPath?: string
-
-    /**
-     * Auto generate types for locales.
-     * @default true
-     */
-    autoGenerate?: boolean
   }
 
   /**
@@ -305,8 +292,6 @@ export class Polyglot<K extends DefineLocaleMessage> {
     this.errorOnMissing = opts.errorOnMissing || false
 
     if (opts.loaderOptions) {
-      opts.loaderOptions.autoGenerate = opts.loaderOptions.autoGenerate || true
-
       this.loaderOptions = opts.loaderOptions
 
       if (this.loaderOptions.path) {

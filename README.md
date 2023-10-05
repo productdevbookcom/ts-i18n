@@ -290,7 +290,6 @@ const i18n = new Polyglot<I18nTranslations>({
   locale: 'en',
   loaderOptions: {
     path: 'locales',
-    typesOutputPath: 'i18n.d.ts',
   },
 })
 
