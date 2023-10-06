@@ -1,13 +1,12 @@
 import type { Dirent } from 'node:fs'
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { extname, join } from 'node:path'
-import { warn } from './utils'
 
-const ACCEPTED_EXTENSIONS = ['.js', '.json']
+const ACCEPTED_EXTENSIONS = ['.json']
 
 export function getLocales(basepath: string, defaultLocale: string) {
   if (!basepath || !existsSync(basepath)) {
-    warn('missing or invalid locales folder')
+    console.warn('missing or invalid locales folder')
     return {}
   }
   let contents: any[] = []
@@ -16,7 +15,7 @@ export function getLocales(basepath: string, defaultLocale: string) {
     contents = readdirSync(basepath, { withFileTypes: true })
   }
   catch (err: any) {
-    warn(err)
+    console.warn(err)
   }
   return contents
     .filter((entry: Dirent) => {
@@ -30,7 +29,7 @@ export function getLocales(basepath: string, defaultLocale: string) {
         return readFileSync(pathname + ext, 'utf8')
       }
       else {
-        warn(`Missing locale: ${pathname}`)
+        console.warn(`Missing locale: ${pathname}`)
         return {}
       }
     }, {})

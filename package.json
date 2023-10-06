@@ -28,11 +28,71 @@
     ".": {
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
-    }
+    },
+    "./vite": {
+      "import": {
+        "types": "./dist/unplugin/vite.d.ts",
+        "default": "./dist/unplugin/vite.js"
+      },
+      "require": {
+        "types": "./dist/unplugin/vite.d.cts",
+        "default": "./dist/unplugin/vite.cjs"
+      }
+    },
+    "./esbuild": {
+      "import": {
+        "types": "./dist/unplugin/esbuild.d.ts",
+        "default": "./dist/unplugin/esbuild.js"
+      },
+      "require": {
+        "types": "./dist/unplugin/esbuild.d.cts",
+        "default": "./dist/unplugin/esbuild.cjs"
+      }
+    },
+    "./rollup": {
+      "import": {
+        "types": "./dist/unplugin/rollup.d.ts",
+        "default": "./dist/unplugin/rollup.js"
+      },
+      "require": {
+        "types": "./dist/unplugin/rollup.d.cts",
+        "default": "./dist/unplugin/rollup.cjs"
+      }
+    },
+    "./webpack": {
+      "import": {
+        "types": "./dist/unplugin/webpack.d.ts",
+        "default": "./dist/unplugin/webpack.js"
+      },
+      "require": {
+        "types": "./dist/unplugin/webpack.d.cts",
+        "default": "./dist/unplugin/webpack.cjs"
+      }
+    },
+    "./nuxt": {
+      "import": {
+        "types": "./dist/unplugin/nuxt.d.ts",
+        "default": "./dist/unplugin/nuxt.js"
+      },
+      "require": {
+        "types": "./dist/unplugin/nuxt.d.cts",
+        "default": "./dist/unplugin/nuxt.cjs"
+      }
+    },
+    "./*": "./*"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/unplugin/*",
+        "./*"
+      ]
+    }
+  },
   "files": [
     "dist"
   ],
@@ -52,12 +112,44 @@
     "postinstall": "npx simple-git-hooks"
   },
   "peerDependencies": {
-    "typescript": "^5.2.2"
+    "@nuxt/kit": "^3",
+    "@nuxt/schema": "^3",
+    "esbuild": "*",
+    "rollup": "^3",
+    "typescript": "^5",
+    "vite": ">=3",
+    "webpack": "^4 || ^5"
+  },
+  "peerDependenciesMeta": {
+    "webpack": {
+      "optional": true
+    },
+    "rollup": {
+      "optional": true
+    },
+    "vite": {
+      "optional": true
+    },
+    "esbuild": {
+      "optional": true
+    },
+    "@nuxt/kit": {
+      "optional": true
+    },
+    "@nuxt/schema": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "unplugin": "^1.5.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "1.0.0-beta.19",
+    "@nuxt/kit": "^3.7.4",
+    "@nuxt/schema": "^3.7.4",
     "@types/has": "^1.0.0",
     "@types/iterate-iterator": "^1.0.0",
+    "@types/node": "^20.8.2",
     "@vitest/coverage-v8": "^0.34.6",
     "bumpp": "^9.2.0",
     "eslint": "^8.50.0",

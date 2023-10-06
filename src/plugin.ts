@@ -46,7 +46,6 @@ export interface PolyglotOptions {
    * Safe TypeScript types for translations.
    * @example {
    *   path: 'locales',
-   *   typesOutputPath: 'i18n.d.ts',
    * }
    */
   loaderOptions?: {
@@ -55,18 +54,6 @@ export interface PolyglotOptions {
      * @example 'locales'
      */
     path: string
-
-    /**
-     * Typescript types output path.
-     * @example 'i18n.d.ts'
-     */
-    typesOutputPath?: string
-
-    /**
-     * Auto generate types for locales.
-     * @default true
-     */
-    autoGenerate?: boolean
   }
 
   /**
@@ -305,17 +292,12 @@ export class Polyglot<K extends DefineLocaleMessage> {
     this.errorOnMissing = opts.errorOnMissing || false
 
     if (opts.loaderOptions) {
-      opts.loaderOptions.autoGenerate = opts.loaderOptions.autoGenerate || true
-
       this.loaderOptions = opts.loaderOptions
 
       if (this.loaderOptions.path) {
         const lang = getLocales(this.loaderOptions.path, this.currentLocale)
         this.extend(JSON.parse(lang as any))
       }
-
-      if (this.loaderOptions.autoGenerate)
-        this.generateTS()
     }
   }
 
@@ -414,57 +396,6 @@ export class Polyglot<K extends DefineLocaleMessage> {
 
   has(key: string) {
     return this.phrases[key] != null
-  }
-
-  async generateTS() {
-    if (!this.loaderOptions)
-      this.warn('No loader options provided')
-
-    try {
-      if (this.loaderOptions!.typesOutputPath) {
-        try {
-          const ts = await import('./utils/typescript.js')
-
-          const { mkdirSync, readFileSync, writeFileSync } = await import('node:fs')
-          const { dirname } = await import('node:path')
-          const lang = getLocales(this.loaderOptions!.path, this.currentLocale)
-          const rawContent = await ts.createTypesFile(JSON.parse(lang as any))
-
-          if (!rawContent) {
-            this.warn('No content generated')
-            return
-          }
-          const outputFile = ts.annotateSourceCode(rawContent)
-
-          mkdirSync(dirname(this.loaderOptions!.typesOutputPath), {
-            recursive: true,
-          })
-          let currentFileContent = null
-          try {
-            currentFileContent = readFileSync(
-              this.loaderOptions!.typesOutputPath,
-              'utf8',
-            )
-          }
-          catch (err) {
-            console.error(err)
-          }
-          if (currentFileContent !== outputFile) {
-            writeFileSync(this.loaderOptions!.typesOutputPath, outputFile)
-            warn(`Types generated language in: ${this.loaderOptions!.typesOutputPath}`, 'SUCCESS')
-          }
-          else {
-            warn('No changes language files', 'SUCCESS')
-          }
-        }
-        catch (_) {
-          warn('Typescript package not found')
-        }
-      }
-    }
-    catch (error) {
-      console.warn(error)
-    }
   }
 
   static transformPhrase(phrase?: any, substitutions?: number | InterpolationOptions, locale?: string) {

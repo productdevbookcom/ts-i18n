@@ -8,7 +8,10 @@ const external = [
 ]
 
 export default <Options>{
-  entryPoints: ['src/index.ts'],
+  entryPoints: [
+    'src/index.ts',
+    'src/unplugin/*.ts',
+  ],
   outDir: 'dist',
   target: 'node18',
   format: ['esm', 'cjs'],

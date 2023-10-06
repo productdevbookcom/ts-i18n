@@ -22,10 +22,20 @@ Unlike some i18n libraries, ts-i18n doesn't handle the actual translation of phr
 - Node.js Version >= 18.0.0
 - ES module support
 - Type Safe and Auto Complete
+- Unplugin TS Safe
+
+## Sponsors
+
+<p align="center">
+  <a href="https://cdn.jsdelivr.net/gh/productdevbook/static/sponsors.svg">
+    <img alt="sponsors" src='https://cdn.jsdelivr.net/gh/productdevbook/static/sponsors.svg'/>
+  </a>
+</p>
+
 
 ## Installation
 
-```bash
+```sh
 pnpm add @productdevbook/ts-i18n
 ```
 
@@ -54,6 +64,139 @@ const polyglot = new Polyglot({ phrases: { hello: 'Hello' } })
 ```
 
 Polyglot doesn’t do the translation for you. It’s up to you to give it the proper phrases for the user’s locale.
+
+
+## Type Safety - Unplugin 
+
+This structure allows you to convert a given json file to TS and creates the interface for ts-i18n. The resulting file then needs to be imported instead of `new Polyglot<T>` `T`.
+
+<details>
+<summary>Vite</summary><br>
+
+```ts
+// vite.config.ts
+import TSI18n from '@productdevbook/ts-i18n/vite'
+
+export default defineConfig({
+  plugins: [
+    TSI18n({
+      exportFilePath: './i18n.d.ts',
+      localesFolder: 'locales',
+      selectLanguage: 'en',
+    }),
+  ],
+})
+```
+
+<br></details>
+
+<details>
+<summary>Webpack</summary><br>
+
+```ts
+// webpack.config.ts
+module.exports = {
+  /* ... */
+  plugins: [
+    require('@productdevbook/ts-i18n/webpack')({
+      exportFilePath: './i18n.d.ts',
+      localesFolder: 'locales',
+      selectLanguage: 'en',
+    }),
+  ],
+}
+```
+
+<br></details>
+
+
+<details>
+<summary>Rollup</summary><br>
+
+```ts
+// rollup.config.js
+import TSI18n from '@productdevbook/ts-i18n/rollup'
+
+export default {
+  plugins: [
+    TSI18n({
+      exportFilePath: './i18n.d.ts',
+      localesFolder: 'locales',
+      selectLanguage: 'en',
+    }),
+  ],
+}
+```
+
+<br></details>
+
+<details>
+<summary>ESBuild</summary><br>
+
+```ts
+// esbuild.config.js
+// esbuild.config.js
+import { build } from 'esbuild'
+
+build({
+  /* ... */
+  plugins: [
+    require('@productdevbook/ts-i18n/esbuild')({
+      exportFilePath: './i18n.d.ts',
+      localesFolder: 'locales',
+      selectLanguage: 'en',
+    }),
+  ],
+})
+```
+
+<br></details>
+
+<details>
+<summary>Nuxt</summary><br>
+
+
+You might not need this plugin for Nuxt. Use `@productdevbook/ts-i18n/nuxt` instead.
+
+
+<br></details>
+
+
+## Locale Files
+If you tell it which folder the language files are in, it will automatically fetch the language according to that locale and get the values from it.
+
+```ts
+import { Polyglot } from '@productdevbook/ts-i18n'
+import type { I18nTranslations } from './i18n'
+
+const i18n = new Polyglot<I18nTranslations>({
+  locale: 'en',
+  loaderOptions: {
+    path: 'locales',
+  },
+})
+
+i18n.t('hello') // Hello
+
+const i18n = new Polyglot<I18nTranslations>({
+  locale: 'tr',
+  loaderOptions: {
+    path: 'locales',
+  },
+})
+
+i18n.t('hello') // Merhaba
+```
+
+### Error Missing Translation
+
+If you want to throw an error when a translation is missing, you can use the `errorOnMissing` option.
+
+```ts
+const i18n = new Polyglot({
+  errorOnMissing: true,
+})
+```
 
 ### Interpolation
 `Polyglot.t()` also provides interpolation. Pass an object with key-value pairs of interpolation arguments as the second parameter.
@@ -274,50 +417,6 @@ Returns `true` if the key does exist in the provided phrases, otherwise it will 
 
 Takes a phrase string and transforms it by choosing the correct plural form and interpolating it. This method is used internally by `t`. The correct plural form is selected if substitutions.smart_count is set. You can pass in a number instead of an Object as `substitutions` as a shortcut for `smart_count`. You should pass in a third argument, the locale, to specify the correct plural type. It defaults to `'en'` which has 2 plural forms.
 
-## Type Safety
-
-`@productdevbook/ts-i18n` can generate types! This way your translations will be completely type safe! 🎉
-
-This video click to play:
-[![Watch the video](./.github/assets/type-safe.png)](./.github/assets/type-safe.mp4)
-
-
-```ts
-import { Polyglot } from '@productdevbook/ts-i18n'
-import type { I18nTranslations } from './i18n'
-
-const i18n = new Polyglot<I18nTranslations>({
-  locale: 'en',
-  loaderOptions: {
-    path: 'locales',
-    typesOutputPath: 'i18n.d.ts',
-  },
-})
-
-i18n.t('hello') // Hello
-```
-
-### Error Missing Translation
-
-If you want to throw an error when a translation is missing, you can use the `errorOnMissing` option.
-
-```ts
-const i18n = new Polyglot({
-  locale: 'en',
-  loaderOptions: {
-    path: 'locales',
-  },
-  errorOnMissing: true,
-})
-```
-
-## Sponsors
-
-<p align="center">
-  <a href="https://cdn.jsdelivr.net/gh/productdevbook/static/sponsors.svg">
-    <img alt="sponsors" src='https://cdn.jsdelivr.net/gh/productdevbook/static/sponsors.svg'/>
-  </a>
-</p>
 
 ## Development
 

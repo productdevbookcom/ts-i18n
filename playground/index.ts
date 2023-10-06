@@ -5,7 +5,6 @@ const polyglot = new Polyglot<I18nTranslations>({
   locale: 'tr',
   loaderOptions: {
     path: 'locales',
-    typesOutputPath: 'i18n.d.ts',
   },
   errorOnMissing: true,
 })
