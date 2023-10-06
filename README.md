@@ -158,6 +158,21 @@ build({
 
 You might not need this plugin for Nuxt. Use `@productdevbook/ts-i18n/nuxt` instead.
 
+```ts
+// nuxt.config.ts
+
+export default defineNuxtConfig({
+  modules: [
+    '@productdevbook/ts-i18n/nuxt',
+  ],
+
+  tsI18n: {
+    exportFilePath: './i18n.d.ts',
+    localesFolder: 'locales',
+    selectLanguage: 'en',
+  },
+})
+```
 
 <br></details>
 
