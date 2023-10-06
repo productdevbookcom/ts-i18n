@@ -1,7 +1,7 @@
 {
   "name": "@productdevbook/ts-i18n",
   "type": "module",
-  "version": "1.4.0-beta.1",
+  "version": "1.4.0",
   "packageManager": "pnpm@8.7.0",
   "description": "Give your JavaScript the ability to speak many languages.",
   "author": "Mehmet @productdevbook",
