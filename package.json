@@ -108,8 +108,7 @@
     "lint:fix": "eslint . --fix",
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "coverage": "vitest run --coverage",
-    "postinstall": "npx simple-git-hooks"
+    "coverage": "vitest run --coverage"
   },
   "peerDependencies": {
     "@nuxt/kit": "^3",
@@ -168,6 +167,6 @@
     "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
-    "*": "pnpm eslint . --fix"
+    "*": "eslint . --fix"
   }
 }
