@@ -12,10 +12,10 @@
   },
   "dependencies": {
     "@productdevbook/ts-i18n": "workspace:^",
-    "jiti": "^1.20.0"
+    "jiti": "^1.21.6"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1",
-    "typescript": "^5.2.2"
+    "nodemon": "^3.1.7",
+    "typescript": "^5.6.3"
   }
 }
