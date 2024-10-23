@@ -140,23 +140,23 @@
     }
   },
   "dependencies": {
-    "unplugin": "^1.5.0"
+    "unplugin": "^1.14.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "1.0.0-beta.19",
-    "@nuxt/kit": "^3.7.4",
-    "@nuxt/schema": "^3.7.4",
-    "@types/has": "^1.0.0",
-    "@types/iterate-iterator": "^1.0.0",
-    "@types/node": "^20.8.2",
+    "@antfu/eslint-config": "1.2.1",
+    "@nuxt/kit": "^3.13.2",
+    "@nuxt/schema": "^3.13.2",
+    "@types/has": "^1.0.2",
+    "@types/iterate-iterator": "^1.0.2",
+    "@types/node": "^20.17.0",
     "@vitest/coverage-v8": "^0.34.6",
-    "bumpp": "^9.2.0",
-    "eslint": "^8.50.0",
+    "bumpp": "^9.7.1",
+    "eslint": "^8.57.1",
     "iterate-iterator": "^1.0.2",
     "lint-staged": "^14.0.1",
-    "simple-git-hooks": "^2.9.0",
+    "simple-git-hooks": "^2.11.1",
     "tsup": "^7.2.0",
-    "typescript": "^5.2.2",
+    "typescript": "^5.6.3",
     "vite": "^4.4.10",
     "vitest": "^0.34.6"
   },
