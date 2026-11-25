@@ -145,7 +145,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "1.0.0-beta.19",
     "@nuxt/kit": "^3.7.4",
-    "@nuxt/schema": "^3.7.4",
+    "@nuxt/schema": "^4.0.0",
     "@types/has": "^1.0.0",
     "@types/iterate-iterator": "^1.0.0",
     "@types/node": "^20.8.2",
